@@ -9,6 +9,11 @@ RGB_LIBRARY=$(RGB_LIBDIR)/lib$(RGB_LIBRARY_NAME).a
 PYTHON_LIB_DIR=bindings/python
 CSHARP_LIB_DIR=bindings/c\#
 
+EXAMPLES = examples-api-use/demo \
+           examples-api-use/scrolling-text-example \
+           examples-api-use/text-example \
+           examples-api-use/citi-bike-display
+
 all : $(RGB_LIBRARY)
 
 $(RGB_LIBRARY): FORCE
@@ -30,6 +35,9 @@ build-python: $(RGB_LIBRARY)
 
 install-python: build-python
 	$(MAKE) -C $(PYTHON_LIB_DIR) install
+
+examples-api-use/citi-bike-display: examples-api-use/citi-bike-display.cc
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^ $(LDFLAGS) -lled-matrix -lgraphics
 
 FORCE:
 .PHONY: FORCE
